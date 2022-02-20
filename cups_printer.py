@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# Copyright: (c) 2019, Robert Pouliot <robert.pouliot@etisos.com>
+# Copyright: (c) 2019-2022, Robert Pouliot <robert.pouliot@etisos.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 ANSIBLE_METADATA = {
@@ -103,7 +103,7 @@ options:
 
 
 author:
-    - Robert Pouliot (@rpouliot77)
+    - Robert Pouliot (@robertpouliot)
 
 requirements:
     - pycups
@@ -111,13 +111,30 @@ requirements:
 
 EXAMPLES = '''
 # Basic facts from local cups host
-- name: Get CUPS facts
-  cups_facts:
+- name: Create home printer
+  cups_printer:
+    name: 'MyPrinter'
+    state: present
+    desc: 'My home printer'
+    location: '2nd floor'
+    device: 'socket://192.168.6.123:9100'
+    ppd_type: 'cups'
+    ppd: 'lsb/usr/HP/hp-laserjet_4200-ps.ppd.gz'
+    shared: false
+    default: true
 
-# Get facts from local CUPS host with different user
-- name: Get CUPS fact with user cupsadm
-  cups_facts:
-    user: cupsadm
+- name: Create home printer
+  cups_printer:
+    name: 'MyPrinter'
+    desc: 'My home printer'
+    device: 'lpd://192.168.6.111/lp'
+    ppd_type: 'raw'
+    error_policy: 'retry-job'
+    enabled: false
+    header: 'my-banner-page'
+    footer: 'ending-page'
+
+
 '''
 
 RETURN = '''# '''
